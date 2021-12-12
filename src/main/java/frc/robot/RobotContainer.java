@@ -69,17 +69,17 @@ public class RobotContainer {
         SmartDashboard.putData("Shooter", m_shooter);
         m_driveTrain.setDefaultCommand(new DriveWithXboxController(m_driveTrain, m_driverController));
         configureButtonBindings();
-        m_commandChooser.setDefaultOption("Reset Spinner Only", new ResetSpinnerPosition(m_spinner));
-        m_commandChooser.setDefaultOption("Drive And Shoot", new ParallelCommandGroup(
+        m_commandChooser.setDefaultOption("Drive Forward", new ParallelCommandGroup(
+                new FollowPath(m_driveTrain, Trajectories.simpleForward),
+                new ResetSpinnerPosition(m_spinner)));
+        m_commandChooser.addOption("Reset Spinner Only", new ResetSpinnerPosition(m_spinner));
+        m_commandChooser.addOption("Drive And Shoot", new ParallelCommandGroup(
                 new ResetSpinnerPosition(m_spinner),
                 new AutoShoot(m_shooter, m_intake, m_driveTrain, Trajectories.shootDriveForward)
             )
         );
-        m_commandChooser.setDefaultOption("Drive Forward", new ParallelCommandGroup(
-            new FollowPath(m_driveTrain, Trajectories.simpleForward),
-            new ResetSpinnerPosition(m_spinner)));
-        m_commandChooser.setDefaultOption("Drive Circle", new FollowPath(m_driveTrain, Trajectories.circleRight));
-        m_commandChooser.setDefaultOption("Backwards P", new FollowPath(m_driveTrain, Trajectories.backwardsP));
+        m_commandChooser.addOption("Drive Circle", new FollowPath(m_driveTrain, Trajectories.circleRight));
+        m_commandChooser.addOption("Backwards P", new FollowPath(m_driveTrain, Trajectories.backwardsP));
         
         SmartDashboard.putData("Auto Command", m_commandChooser);
         SmartDashboard.putNumber("Auto Delay", 0);
